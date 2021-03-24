@@ -1,10 +1,14 @@
-def pretty(d, indent=0):
+def pretty(d):
+    print('cook_book = {')
     for key, value in d.items():
-        print('\t' * indent + str(key))
+        print("'", str(key), "': [", sep = '')
         for item in value:
             print('\t', item)
+        print('\t', '],')
+    print('}')
 
 def get_cook_book():
+    glossary = {}
     with open('text.txt', 'r', encoding="utf-8") as f:
         glossary = {}
         for line in f:
@@ -33,8 +37,23 @@ def get_cook_book():
             else:
                 name = line[0:len(line)-1]
                 empty_list = []
-                # print('наименование блюда')
-                # наименование блюда
-        pretty(glossary)
+    pretty(glossary)
+    return glossary
 
-get_cook_book()
+def get_shop_list_by_dishes(dishes, person_count):
+    glossary = get_cook_book()
+    ingredients = {}
+    ready = {}
+    for cook in dishes:
+        if cook in glossary.keys():
+            for ingredient in glossary.get(cook):
+                if ingredient.get('ingredient_name') in ingredients.keys():
+                    count_1 = ingredient.get('ingredient_quantity')
+                    vremennii = ingredients.get(ingredient.get('ingredient_name'))
+                    count_2 = vremennii.get('quantity')
+                    total_count = ingredients.get(ingredient.get('quantity')) + glossary.get(cook.get('ingredient_quantity'))
+            ingredients = glossary.get(cook)
+
+
+
+get_shop_list_by_dishes(['Фахитос', 'Запеченный картофель'], 0)
